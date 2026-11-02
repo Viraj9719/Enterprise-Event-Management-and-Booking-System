@@ -1,0 +1,268 @@
+
+    :root {
+      --ink: #0a0a0f;
+      --ink-soft: #1c1c28;
+      --surface: #13131f;
+      --card: #1a1a2e;
+      --border: rgba(255,255,255,0.07);
+      --accent: #e8ff47;
+      --accent-dim: rgba(232,255,71,0.12);
+      --accent-glow: rgba(232,255,71,0.35);
+      --text: #f0f0f5;
+      --muted: #6b6b82;
+      --danger: #ff5f5f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── Animated background ── */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(232,255,71,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,255,71,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift { to { background-position: 48px 48px; } }
+
+    .blob {
+      position: fixed; border-radius: 50%; filter: blur(80px);
+      opacity: 0.18; z-index: 0; pointer-events: none;
+    }
+    .blob-1 {
+      width: 500px; height: 500px;
+      background: #5b2fff;
+      top: -120px; left: -100px;
+      animation: floatA 14s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 400px; height: 400px;
+      background: var(--accent);
+      bottom: -80px; right: -80px;
+      animation: floatB 18s ease-in-out infinite alternate;
+    }
+    @keyframes floatA { to { transform: translate(60px, 80px) scale(1.15); } }
+    @keyframes floatB { to { transform: translate(-40px, -60px) scale(1.1); } }
+
+    /* ── Card ── */
+    .login-wrapper {
+      position: relative; z-index: 10;
+      width: 100%; max-width: 440px;
+      padding: 16px;
+      animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 44px 40px 40px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 24px 64px rgba(0,0,0,0.55),
+        0 0 80px rgba(91,47,255,0.08);
+      backdrop-filter: blur(20px);
+    }
+
+    /* ── Logo ── */
+    .logo-area {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 12px; margin-bottom: 32px;
+    }
+
+    .logo-ring {
+      width: 68px; height: 68px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #5b2fff 0%, #9d6fff 100%);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(91,47,255,0.45);
+      position: relative;
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+    @keyframes logoPulse {
+      0%,100% { box-shadow: 0 8px 32px rgba(91,47,255,0.45); }
+      50%      { box-shadow: 0 8px 48px rgba(91,47,255,0.7); }
+    }
+
+    .logo-ring svg { width: 32px; height: 32px; }
+
+    .page-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .company-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .tagline {
+      font-size: 13px; color: var(--muted); margin-top: 2px;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin-bottom: 28px;
+    }
+
+    /* ── Form ── */
+    .form-label {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 7px;
+    }
+
+    .input-wrap { position: relative; margin-bottom: 18px; }
+
+    .input-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .form-control {
+      background: rgba(255,255,255,0.04) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 12px !important;
+      color: var(--text) !important;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 12px 14px 12px 42px !important;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      caret-color: var(--accent);
+    }
+
+    .form-control::placeholder { color: var(--muted); }
+
+    .form-control:focus {
+      background: rgba(232,255,71,0.04) !important;
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 3px var(--accent-dim) !important;
+      outline: none;
+    }
+
+    .form-control:focus + .input-focus-line { transform: scaleX(1); }
+
+    .form-control:focus ~ .input-icon { color: var(--accent); }
+
+    /* Eye toggle */
+    .eye-btn {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); padding: 0; line-height: 1;
+      transition: color 0.2s;
+    }
+    .eye-btn:hover { color: var(--text); }
+
+    /* ── Utility row ── */
+    .util-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .form-check-input {
+      background-color: rgba(255,255,255,0.06) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 5px !important;
+      width: 16px; height: 16px;
+      cursor: pointer;
+    }
+    .form-check-input:checked {
+      background-color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%230a0a0f' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3 6-6'/%3e%3c/svg%3e") !important;
+    }
+    .form-check-input:focus { box-shadow: 0 0 0 3px var(--accent-dim) !important; }
+
+    .form-check-label {
+      font-size: 13px; color: var(--muted);
+      cursor: pointer; user-select: none;
+    }
+
+    .forgot-link {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .forgot-link:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Sign-in button ── */
+    .btn-signin {
+      width: 100%;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 14px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border: none; border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px var(--accent-glow);
+    }
+
+    .btn-signin::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0; transition: opacity 0.2s;
+    }
+
+    .btn-signin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px var(--accent-glow);
+    }
+    .btn-signin:hover::before { opacity: 1; }
+    .btn-signin:active { transform: translateY(0); }
+
+    .btn-signin .arrow {
+      display: inline-block; margin-left: 8px;
+      transition: transform 0.2s;
+    }
+    .btn-signin:hover .arrow { transform: translateX(4px); }
+
+    /* ── Footer note ── */
+    .footer-note {
+      text-align: center; margin-top: 24px;
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .footer-note a {
+      color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-note a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .login-card { padding: 32px 24px 28px; }
+      .company-name { font-size: 22px; }
+    }
